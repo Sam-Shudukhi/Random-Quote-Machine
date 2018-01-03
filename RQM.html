@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">       
+<style>
+body {
+  background:#428bca;
+}
+
+.jumbotron {
+  margin-top: 5%;
+  /* margin-bottom: 50%;*/
+}
+
+.body {
+  background:#eee;
+  border-radius:5px;
+  width: 50%;
+  margin: 0 auto;
+  top:50%;
+}
+</style>
+
+<script>
+$(document).ready(function(){
+  var toTweet = '"We have art to save ourselves from the truth." - Friedrich Nietzsche';
+  $('#text').html('We have art to save ourselves from the truth.');
+  $('#author').html('- Friedrich Nietzsche');
+  $('#tweet').attr('href','https://twitter.com/intent/tweet?text='+toTweet);
+  $('#qb').on('click',function(){
+    $.ajax({
+      
+      // the below part is from FCC example / author: Gabriel Nunes
+    headers: {
+      "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V",
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    url: 'https://andruxnet-random-famous-quotes.p.mashape.com/cat=',
+      // the above part is from FCC example / author: Gabriel Nunes
+      
+    success: function(json) {
+       json = JSON.parse(json); 
+      quoteText = json.quote;
+      quoteAuthor = json.author;
+     
+      $('#text').text(quoteText);
+      $('#author').html('- '+quoteAuthor);
+      $('#tweet').attr('href','https://twitter.com/intent/tweet?text="'+quoteText+'" - '+quoteAuthor);
+    }
+    }); // ajax
+  }); // event
+}); // ready
+</script>
+</head>
+<body>
+        <div class='container'>
+                <div class='jumbotron'>
+                  <div class='body'>
+                   &nbsp;&nbsp; <i class='fa fa-quote-left fa-3x'></i><br>
+                    <div id='text'></div>
+                    <div class='pull-right' id='author'></div><br><br>
+                    <button id='qb' class='pull-right btn btn-info'>Quote</button>
+                    <a id='tweet' target='_blank'><button class='pull-left btn btn-info'><i class='fa fa-twitter'></i></button></a>
+                  </div>
+                </div>
+              </div>
+</body>
+</html>
